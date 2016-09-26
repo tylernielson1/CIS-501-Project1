@@ -8,5 +8,11 @@ namespace Project1
 {
     class OldMaid
     {
+        private CardDeck deck = new CardDeck();
+        private List<Player> currentPlayers = new List<Player>();
+        private int numPlayers;
+
+
+
     }
 }

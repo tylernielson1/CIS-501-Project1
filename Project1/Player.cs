@@ -19,8 +19,15 @@ namespace Project1
         }
 
         private void Shuffle()
-        {
-            //Knuth's Algorithm
+        {//http://rosettacode.org/wiki/Knuth_shuffle
+            Random r = new Random();
+            for (int i = 0; i < hand.Length; i++)
+            {
+                int j = r.Next(i, hand.Length);
+                PlayingCard temp = hand[i];
+                hand[i] = hand[j];
+                hand[j] = temp;
+            }
         }
 
         private void DiscardAllPairs()

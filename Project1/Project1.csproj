@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="CardDeck.cs" />
     <Compile Include="ComputerPlayer.cs" />
+    <Compile Include="ConsoleTerminal.cs" />
     <Compile Include="HumanPlayer.cs" />
     <Compile Include="OldMaid.cs" />
     <Compile Include="Player.cs" />
