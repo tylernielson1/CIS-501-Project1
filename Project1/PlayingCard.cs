@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Project1
 {
@@ -14,8 +15,10 @@ namespace Project1
             Heart,
             Diamond,
             Spade,
-            Joker
+            OldMaid
         };
+        static readonly string[] suits = { "C", "H", "D", "S", "O" };
+        static readonly string[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K", "M" };
 
         private int _rank;
         private bool _faceUp;
@@ -52,7 +55,7 @@ namespace Project1
             }
             set
             {
-                _faceUp = this.FaceUp;
+                _faceUp = value;
             }
         }
 
@@ -61,7 +64,8 @@ namespace Project1
         {
             if(this._faceUp)
             {
-                
+                string temp = suits[(int)_suit - 1] + ranks[_rank];
+                return temp;
             }
             else
             {

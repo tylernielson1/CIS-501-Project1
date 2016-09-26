@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Project1
 {
     class CardDeck
     {
-        private PlayingCard[] deck = new PlayingCard[53];
-        private int topIndex;
+        public static PlayingCard[] deck = new PlayingCard[53];
+        public static int topIndex;
 
         public CardDeck()
         {
-            PlayingCard tempCard = new PlayingCard();
             int tempCount = 0;
-            for(int i = 0; i < 4; i++)
+            for(int i = 1; i < 5; i++)
             {
                 for(int j = 0; j < 13; j++)
                 {
-                    //TODO: Deal cards correctly
+                    deck[tempCount] =  new PlayingCard(j, i, false);
+                    tempCount++;
                 }
             }
+            deck[tempCount] = new PlayingCard(13, 5, false);
         }
 
         private PlayingCard Draw()
         {
-            PlayingCard temp = new PlayingCard();
+            PlayingCard temp;
             temp = deck[topIndex];
             deck[topIndex] = null;
             topIndex--;
@@ -45,7 +47,7 @@ namespace Project1
             }
         }
 
-        private void ReturnCard(PlayingCard card)
+        public static void ReturnCard(PlayingCard card)
         {
             topIndex++;
             deck[topIndex] = card;
