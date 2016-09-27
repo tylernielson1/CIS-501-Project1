@@ -9,13 +9,13 @@ namespace Project1
 {
     abstract class Player
     {
-        private PlayingCard[] hand; //TODO: change hand size.
+        private PlayingCard[] hand;
         public int topIndex;
         private string name;
         private CardDeck deck;
         private bool isUser;
 
-        private static PlayingCard[] temp = new PlayingCard[15];
+        private static PlayingCard[] temp = new PlayingCard[14];
 
         public bool IsUser
         {
@@ -72,13 +72,39 @@ namespace Project1
 
         private void DiscardAllPairs()
         {
-
+            for (int i = 0; i < hand.Length; i++)
+            {
+                int index = (int)hand[i].Rank;
+                if (temp[index] != null)
+                {
+                    CardDeck.ReturnCard(temp[index]);
+                    temp[index] = null;
+                    CardDeck.ReturnCard(hand[i]);
+                    hand[i] = null;
+                }
+                else
+                {
+                    temp[index] = hand[i];
+                    hand[i] = null;
+                }
+            }
+            int hold = 0;
+            for(int i = 0; i < temp.Length; i++)
+            {
+                if(temp[i] != null)
+                {
+                    hand[hold] = temp[i];
+                    hold++;
+                    temp[i] = null;
+                }
+            }
+            topIndex = hold;
         }
 
         public abstract void Deal(PlayingCard card);
 
         private PlayingCard PickCardAt(int i)
-        {
+        {//Picks a card from the player's hand and returns the card picked.
             if (i >= 0 && i <= topIndex)
             {
                 PlayingCard temp = hand[i];
@@ -94,24 +120,38 @@ namespace Project1
         }
 
         private void AddCard(PlayingCard card)
-        {
+        {//Adds a card to the player's hand after selecting it from another player.
             bool duplicate = false;
             for(int i = 0; i <= topIndex; i++)
             {
                 if(hand[i].Rank == card.Rank)
                 {
-
+                    if(topIndex == i)
+                    {//If duplicate is final card in hand.
+                        CardDeck.ReturnCard(hand[topIndex]);
+                        hand[topIndex] = null;
+                        topIndex--;
+                    }
+                    else
+                    {//If dupicate is not final card in hand.
+                        CardDeck.ReturnCard(hand[i]);
+                        hand[i] = hand[topIndex];
+                        hand[topIndex] = null;
+                        topIndex--;
+                    }
+                    duplicate = true;
+                    break;
                 }
             }
             if(!duplicate)
-            {
+            {//Adds the card if a duplicate is not found.
                 topIndex++;
                 hand[topIndex] = card;
             }
         }
 
         public override string ToString()
-        {
+        {//Creates a string representing the player's hand.
             StringBuilder sb = new StringBuilder();
             foreach(PlayingCard c in hand)
             {
@@ -124,7 +164,7 @@ namespace Project1
         }
 
         private void ReturnHandToDeck()
-        {
+        {//Returns the player's hand to the deck.
             for(int i = 0; i < hand.Length; i++)
             {
                 if(hand[i] != null)

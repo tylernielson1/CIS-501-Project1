@@ -13,21 +13,21 @@ namespace Project1
         public static int topIndex;
 
         public CardDeck()
-        {
+        {//Constructs a deck.
             int tempCount = 0;
             for(int i = 1; i < 5; i++)
             {
-                for(int j = 0; j < 13; j++)
+                for(int j = 1; j < 14; j++)
                 {
                     deck[tempCount] =  new PlayingCard(j, i, false);
                     tempCount++;
                 }
             }
-            deck[tempCount] = new PlayingCard(13, 5, false);
+            deck[tempCount] = new PlayingCard(0, 5, false);
         }
 
         private PlayingCard Draw()
-        {
+        {//Draws the top card from the deck and returns that value.
             PlayingCard temp;
             temp = deck[topIndex];
             deck[topIndex] = null;
@@ -48,7 +48,7 @@ namespace Project1
         }
 
         public static void ReturnCard(PlayingCard card)
-        {
+        {//Returns the card to the deck.
             topIndex++;
             deck[topIndex] = card;
         }
