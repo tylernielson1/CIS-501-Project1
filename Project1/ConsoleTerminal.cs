@@ -30,17 +30,101 @@ namespace Project1
 
         char ITerminal.GetChar(string prompt, string chars)
         {
-            //TODO: Implement method.
+            bool accept = false;
+            Console.Write(prompt);
+
+            string response = "";
+
+            char[] acceptableChars = chars.ToCharArray();
+
+            do
+            {
+                try
+                {
+                    response = Console.ReadLine();
+                    response = response.Trim();
+
+                    if (response.Length > 1)
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+
+                    for (int i = 0; i < acceptableChars.Length; i++)
+                    {
+                        if (response[0] == acceptableChars[i])
+                        {
+                            accept = true;
+                        }
+                    }
+
+                    if(!accept)
+                    {
+                        throw new FormatException();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(prompt);
+                }
+            } while (!accept);
+
+            return response[0];
         }
 
         string ITerminal.GetString(string prompt, int length)
         {
-            //TODO: Implement method.
+            Console.Write(prompt);
+            string response = "";
+
+            do
+            {
+                try
+                {
+                    response = Console.ReadLine();
+                    response = response.Trim();
+
+                    if(response.Length == length)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.Write(prompt);
+                }
+            } while (response.Length != length);
+            return response;
         }
 
         int ITerminal.GetInt(string prompt, int min, int max)
         {
-            //TODO: Implement method.
+            Console.Write(prompt);
+            int answer = 0;
+            do
+            {
+                try
+                {
+                    answer = Convert.ToInt32(Console.ReadLine());
+
+                    if (answer >= min || answer <= max)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(prompt);
+                }
+            } while (answer >= min || answer <= max);
+            return answer;
         }
     }
 }
