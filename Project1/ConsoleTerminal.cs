@@ -18,17 +18,17 @@ namespace Project1
 
     class ConsoleTerminal : ITerminal
     {
-        void ITerminal.Display(string s)
+        public void Display(string s)
         {
             Console.Write(s);
         }
 
-        void ITerminal.DisplayLine(string s)
+        public void DisplayLine(string s)
         {
             Console.WriteLine(s);
         }
 
-        char ITerminal.GetChar(string prompt, string chars)
+        public char GetChar(string prompt, string chars)
         {
             bool accept = false;
             Console.Write(prompt);
@@ -71,7 +71,7 @@ namespace Project1
             return response[0];
         }
 
-        string ITerminal.GetString(string prompt, int length)
+        public string GetString(string prompt, int length)
         {
             Console.Write(prompt);
             string response = "";
@@ -100,7 +100,7 @@ namespace Project1
             return response;
         }
 
-        int ITerminal.GetInt(string prompt, int min, int max)
+        public int GetInt(string prompt, int min, int max)
         {
             Console.Write(prompt);
             int answer = 0;

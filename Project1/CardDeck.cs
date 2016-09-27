@@ -26,7 +26,7 @@ namespace Project1
             deck[tempCount] = new PlayingCard(0, 5, false);
         }
 
-        private PlayingCard Draw()
+        public PlayingCard Draw()
         {//Draws the top card from the deck and returns that value.
             PlayingCard temp;
             temp = deck[topIndex];
@@ -35,7 +35,7 @@ namespace Project1
             return temp;
         }
 
-        private void Shuffle()
+        public void Shuffle()
         {//http://rosettacode.org/wiki/Knuth_shuffle
             Random r = new Random();
             for (int i = 0; i < deck.Length; i++)

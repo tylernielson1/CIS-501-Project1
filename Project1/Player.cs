@@ -58,7 +58,7 @@ namespace Project1
             get { return hand.Length; }
         }
 
-        private void Shuffle()
+        public void Shuffle()
         {//http://rosettacode.org/wiki/Knuth_shuffle
             Random r = new Random();
             for (int i = 0; i < hand.Length; i++)
@@ -70,7 +70,7 @@ namespace Project1
             }
         }
 
-        private void DiscardAllPairs()
+        public void DiscardAllPairs()
         {
             for (int i = 0; i < hand.Length; i++)
             {

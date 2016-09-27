@@ -18,7 +18,12 @@ namespace Project1
         }
         private string MakeCardIndices()
         {
-
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < NumCardsInHand; i++)
+            {
+                sb.Append(i + " ");
+            }
+            return sb.ToString();
         }
 
         public override void Deal(PlayingCard card)
