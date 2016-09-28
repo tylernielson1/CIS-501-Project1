@@ -69,9 +69,9 @@ namespace Project1
         public void Shuffle()
         {//http://rosettacode.org/wiki/Knuth_shuffle
             Random r = new Random();
-            for (int i = 0; i < hand.Length; i++)
+            for (int i = 0; i < topIndex; i++)
             {
-                int j = r.Next(i, hand.Length);
+                int j = r.Next(i, topIndex + 1);
                 PlayingCard temp = hand[i];
                 hand[i] = hand[j];
                 hand[j] = temp;
@@ -82,18 +82,21 @@ namespace Project1
         {
             for (int i = 0; i < hand.Length; i++)
             {
-                int index = (int)hand[i].Rank;
-                if (temp[index] != null)
+                if (hand[i] != null)
                 {
-                    CardDeck.ReturnCard(temp[index]);
-                    temp[index] = null;
-                    CardDeck.ReturnCard(hand[i]);
-                    hand[i] = null;
-                }
-                else
-                {
-                    temp[index] = hand[i];
-                    hand[i] = null;
+                    int index = hand[i].Rank;
+                    if (temp[index] != null)
+                    {
+                        CardDeck.ReturnCard(temp[index]);
+                        temp[index] = null;
+                        CardDeck.ReturnCard(hand[i]);
+                        hand[i] = null;
+                    }
+                    else
+                    {
+                        temp[index] = hand[i];
+                        hand[i] = null;
+                    }
                 }
             }
             int hold = 0;
@@ -132,23 +135,28 @@ namespace Project1
             bool duplicate = false;
             for(int i = 0; i <= topIndex; i++)
             {
-                if(hand[i].Rank == card.Rank)
+                if(hand[i] != null && card != null)
                 {
-                    if(topIndex == i)
-                    {//If duplicate is final card in hand.
-                        CardDeck.ReturnCard(hand[topIndex]);
-                        hand[topIndex] = null;
-                        topIndex--;
+                    if (hand[i].Rank == card.Rank)
+                    {
+                        if (topIndex == i)
+                        {//If duplicate is final card in hand.
+                            CardDeck.ReturnCard(hand[topIndex]);
+                            CardDeck.ReturnCard(card);
+                            hand[topIndex] = null;
+                            topIndex--;
+                        }
+                        else
+                        {//If dupicate is not final card in hand.
+                            CardDeck.ReturnCard(hand[i]);
+                            CardDeck.ReturnCard(card);
+                            hand[i] = hand[topIndex];
+                            hand[topIndex] = null;
+                            topIndex--;
+                        }
+                        duplicate = true;
+                        break;
                     }
-                    else
-                    {//If dupicate is not final card in hand.
-                        CardDeck.ReturnCard(hand[i]);
-                        hand[i] = hand[topIndex];
-                        hand[topIndex] = null;
-                        topIndex--;
-                    }
-                    duplicate = true;
-                    break;
                 }
             }
             if(!duplicate)
@@ -163,7 +171,7 @@ namespace Project1
             StringBuilder sb = new StringBuilder();
             if(this.IsUser)
             {
-                sb.Append(name + " : ");
+                sb.Append(name + "    : ");
             }
             else
             {
@@ -179,7 +187,7 @@ namespace Project1
             return sb.ToString();
         }
 
-        private void ReturnHandToDeck()
+        public void ReturnHandToDeck()
         {//Returns the player's hand to the deck.
             for(int i = 0; i < hand.Length; i++)
             {

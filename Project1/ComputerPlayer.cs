@@ -19,10 +19,10 @@ namespace Project1
         public string MakeCardIndices()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Index   : ");
+            sb.Append("Index   :  ");
             for(int i = 0; i < NumCardsInHand; i++)
             {
-                sb.Append(i + " ");
+                sb.Append(i + "  ");
             }
             return sb.ToString();
         }

@@ -22,41 +22,45 @@ namespace Project1
             numPlayers = computerPlayers + 1;
             allPlayers = new Player[numPlayers];
 
-            HumanPlayer human = new HumanPlayer("hooman", numPlayers);
+            HumanPlayer human = new HumanPlayer("User", numPlayers);
             allPlayers[0] = human;
             for(int i = 1; i < allPlayers.Length; i++)
             {
-                ComputerPlayer comp = new ComputerPlayer("puter" + i, numPlayers);
+                ComputerPlayer comp = new ComputerPlayer("Player" + i, numPlayers);
                 allPlayers[i] = comp;
             }
-
-            //TODO loop de loop
-            ScatterPlayers();
-            for(int i = 0; i < allPlayers.Length; i++)
-            {
-                currentPlayers.Add(allPlayers[i]);
-            }
-            deck.Shuffle();
-            DealCards();
-            ct.DisplayLine("**** After the deal ****");
-            ShowHands();
-            DiscardDupes();
-            ShuffleHands();
-            ct.DisplayLine("**** After discarding pairs and shuffling each hand ****");
-            ShowHands();
-            ct.DisplayLine("");
-            ct.Wait();
-            bool stop;
-            int drawer = 0;
-            int drawee = 0;
+            bool playAgain = true;
             do
             {
-                stop = OneTurn(ref drawer, ref drawee);
-            } while (!stop);
-
-
-
-
+                ScatterPlayers();
+                for (int i = 0; i < allPlayers.Length; i++)
+                {
+                    currentPlayers.Add(allPlayers[i]);
+                }
+                deck.Shuffle();
+                DealCards();
+                ct.DisplayLine("**** After the deal ****");
+                ShowHands();
+                ct.Wait();
+                DiscardDupes();
+                ShuffleHands();
+                ct.DisplayLine("**** After discarding pairs and shuffling each hand ****");
+                ShowHands();
+                ct.DisplayLine("");
+                ct.Wait();
+                bool stop;
+                int drawer = 0;
+                int drawee = 0;
+                do
+                {
+                    stop = OneTurn(ref drawer, ref drawee);
+                } while (!stop);
+                playAgain = PlayAgain();
+                if(playAgain)
+                {
+                    Reset();
+                }
+            } while (playAgain);
         }
 
 
@@ -79,7 +83,7 @@ namespace Project1
             {
                 foreach(Player p in currentPlayers)
                 {
-                    if(count != 53)
+                    if(count < 53)
                     {
                         p.Deal(deck.Draw());
                     }
@@ -148,7 +152,6 @@ namespace Project1
                     ct.DisplayLine("The game is over. " + currentPlayers[0].Name + " is the loser.");
                     return stop;
                 }
-
                 pickedCard = currentPlayers[drawee].PickCardAt(pickedCardIndex);
                 currentPlayers[drawer].AddCard(pickedCard);
                 ct.DisplayLine(currentPlayers[drawer].Name + " picks up " + currentPlayers[drawee].Name + "'s card at position [" + pickedCardIndex + "]. Card : " + pickedCard.ToString());
@@ -177,8 +180,7 @@ namespace Project1
 
             ct.DisplayLine("");
 
-            ct.DisplayLine("@@@@@@@@@@@@@ One round has finished. Shuffling each hand... @@@@@@@@@@@@@@");
-            ShuffleHands();
+
 
             if(currentPlayers.Count <= 1)
             {
@@ -192,9 +194,42 @@ namespace Project1
                 if (drawer > currentPlayers.Count - 1)
                 {
                     drawer = 0;
+                    ct.DisplayLine("@@@@@@@@@@@@@ One turn has finished. Shuffling each hand... @@@@@@@@@@@@@@");
+                    ShuffleHands();
                 }
             }
             return false;
+        }
+
+        public bool PlayAgain()
+        {
+            char answer = ct.GetChar("Do you want to play again? (Y/N): ", "YNyn");
+            if(answer == 'Y' || answer == 'y')
+            {
+                return true;
+            }
+            else if(answer == 'N' || answer == 'n')
+            {
+                return false;
+            }
+            return false;
+
+        }
+        public void Reset()
+        {
+            foreach(Player p in currentPlayers)
+            {
+                p.ReturnHandToDeck();
+            }
+
+            currentPlayers.Clear();
+
+            for(int i = 0; i < allPlayers.Length; i++)
+            {
+                currentPlayers.Add(allPlayers[i]);
+            }
+
+            DealCards();
         }
     }
 }

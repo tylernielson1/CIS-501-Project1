@@ -22,7 +22,7 @@ namespace Project1
         public void Wait()
         {
             Console.Write("<Return> to continue");
-            Console.Read();
+            Console.ReadLine();
         }
 
         public char GetChar(string prompt, string chars)
@@ -107,7 +107,7 @@ namespace Project1
                 {
                     answer = Convert.ToInt32(Console.ReadLine());
 
-                    if (answer >= min || answer <= max)
+                    if (answer >= min && answer <= max)
                     {
                         break;
                     }
@@ -120,7 +120,7 @@ namespace Project1
                 {
                     Console.Write(prompt);
                 }
-            } while (answer >= min || answer <= max);
+            } while (answer <= min || answer >= max);
             return answer;
         }
     }
