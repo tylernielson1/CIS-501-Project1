@@ -14,16 +14,16 @@ namespace Project1
 
         public CardDeck()
         {//Constructs a deck.
-            int tempCount = 0;
+            int topIndex = 0;
             for(int i = 1; i < 5; i++)
             {
                 for(int j = 1; j < 14; j++)
                 {
-                    deck[tempCount] =  new PlayingCard(j, i, false);
-                    tempCount++;
+                    deck[topIndex] =  new PlayingCard(j, i, false);
+                    topIndex++;
                 }
             }
-            deck[tempCount] = new PlayingCard(0, 5, false);
+            deck[topIndex] = new PlayingCard(0, 5, false);
         }
 
         public PlayingCard Draw()

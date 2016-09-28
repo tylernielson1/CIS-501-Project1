@@ -55,7 +55,15 @@ namespace Project1
 
         public int NumCardsInHand
         {
-            get { return hand.Length; }
+            get
+            {
+                int temp = 0;
+                for (int i = 0; i < hand.Length; i++)
+                {
+                    if (hand[i] != null) temp++;
+                }
+                return temp;
+            }
         }
 
         public void Shuffle()
@@ -103,7 +111,7 @@ namespace Project1
 
         public abstract void Deal(PlayingCard card);
 
-        private PlayingCard PickCardAt(int i)
+        public PlayingCard PickCardAt(int i)
         {//Picks a card from the player's hand and returns the card picked.
             if (i >= 0 && i <= topIndex)
             {
@@ -119,7 +127,7 @@ namespace Project1
             }
         }
 
-        private void AddCard(PlayingCard card)
+        public void AddCard(PlayingCard card)
         {//Adds a card to the player's hand after selecting it from another player.
             bool duplicate = false;
             for(int i = 0; i <= topIndex; i++)

@@ -10,7 +10,8 @@ namespace Project1
     {
         public static void Main(string[] args)
         {
-
+            OldMaid om = new OldMaid();
+            om.MyProgram();
         }
     }
 }

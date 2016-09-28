@@ -115,26 +115,86 @@ namespace Project1
         private bool OneTurn(ref int drawer, ref int drawee)
         {
             bool stop = false;
+            int pickedCardIndex = 0;
+            PlayingCard pickedCard;
             drawee = (drawer + 1) % currentPlayers.Count;
-            if(currentPlayers[drawer].IsUser)
+            if (currentPlayers[drawer].IsUser)
             {
                 ct.DisplayLine("******** Now User's Turn *********");
                 ct.DisplayLine(currentPlayers[drawer].ToString());
                 ct.DisplayLine(currentPlayers[drawee].ToString());
-                if(!currentPlayers[drawee].IsUser)
+                if (!currentPlayers[drawee].IsUser)
                 {//oh god why. this disgusts me.
                     ComputerPlayer temp = (ComputerPlayer)currentPlayers[drawee];
                     ct.DisplayLine(temp.MakeCardIndices());
                 }
+                pickedCardIndex = ct.GetInt("Pick one Card from " + currentPlayers[drawee].Name + " : ", 0, currentPlayers[drawee].NumCardsInHand);
             }
-
-
-
-            drawer++;
-            if (drawer > currentPlayers.Count - 1)
+            else
             {
-                drawer = 0;
+                Random r = new Random();
+                pickedCardIndex = r.Next(0, currentPlayers[drawee].NumCardsInHand);
             }
+
+            if (currentPlayers[drawer].NumCardsInHand > 0)
+            {
+                while(currentPlayers[drawee].NumCardsInHand <= 0)
+                {
+                    drawee++;
+                }
+                if (drawee == drawer)
+                {
+                    stop = true;
+                    ct.DisplayLine("The game is over. " + currentPlayers[0].Name + " is the loser.");
+                    return stop;
+                }
+
+                pickedCard = currentPlayers[drawee].PickCardAt(pickedCardIndex);
+                currentPlayers[drawer].AddCard(pickedCard);
+                ct.DisplayLine(currentPlayers[drawer].Name + " picks up " + currentPlayers[drawee].Name + "'s card at position [" + pickedCardIndex + "]. Card : " + pickedCard.ToString());
+
+                if(currentPlayers[drawee].NumCardsInHand <= 0)
+                {
+                    ct.DisplayLine(currentPlayers[drawee].Name + " is done.");
+                }
+                if(currentPlayers[drawer].NumCardsInHand <= 0)
+                {
+                    ct.DisplayLine(currentPlayers[drawer].Name + " is done.");
+                }
+                ct.Wait();
+            }
+            for(int i = currentPlayers.Count - 1; i >= 0; --i)
+            {
+                if(currentPlayers[i].NumCardsInHand <= 0)
+                {
+                    ct.DisplayLine(currentPlayers[i].Name + " is done. Removing from game...");
+                    currentPlayers.RemoveAt(i);
+                }
+            }
+
+            ct.DisplayLine("======== After the pick ========");
+            ShowHands();
+
+            ct.DisplayLine("");
+
+            ct.DisplayLine("@@@@@@@@@@@@@ One round has finished. Shuffling each hand... @@@@@@@@@@@@@@");
+            ShuffleHands();
+
+            if(currentPlayers.Count <= 1)
+            {
+                ct.DisplayLine("The game is over. " + currentPlayers[0].Name + " is the loser.");
+                stop = true;
+            }
+
+            if(!stop)
+            {
+                drawer++;
+                if (drawer > currentPlayers.Count - 1)
+                {
+                    drawer = 0;
+                }
+            }
+            return false;
         }
     }
 }
