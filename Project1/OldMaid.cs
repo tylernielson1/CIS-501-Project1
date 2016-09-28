@@ -132,12 +132,16 @@ namespace Project1
                     ComputerPlayer temp = (ComputerPlayer)currentPlayers[drawee];
                     ct.DisplayLine(temp.MakeCardIndices());
                 }
-                pickedCardIndex = ct.GetInt("Pick one Card from " + currentPlayers[drawee].Name + " : ", 0, currentPlayers[drawee].NumCardsInHand);
+                pickedCardIndex = ct.GetInt("Pick one Card from " + currentPlayers[drawee].Name + " : ", 0, currentPlayers[drawee].NumCardsInHand - 1);
+                pickedCard = currentPlayers[drawee].PickCardAt(pickedCardIndex);
+                pickedCard.FaceUp = true;
             }
             else
             {
                 Random r = new Random();
                 pickedCardIndex = r.Next(0, currentPlayers[drawee].NumCardsInHand);
+                pickedCard = currentPlayers[drawee].PickCardAt(pickedCardIndex);
+                pickedCard.FaceUp = false;
             }
 
             if (currentPlayers[drawer].NumCardsInHand > 0)
