@@ -112,7 +112,10 @@ namespace Project1
             topIndex = hold;
         }
 
-        public abstract void Deal(PlayingCard card);
+        public virtual void Deal(PlayingCard card)
+        {
+
+        }
 
         public PlayingCard PickCardAt(int i)
         {//Picks a card from the player's hand and returns the card picked.
