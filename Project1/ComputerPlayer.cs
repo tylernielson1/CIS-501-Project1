@@ -16,9 +16,10 @@ namespace Project1
             Hand = new PlayingCard[(53 / p) + 2];
             topIndex = -1;
         }
-        private string MakeCardIndices()
+        public string MakeCardIndices()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append("Index   : ");
             for(int i = 0; i < NumCardsInHand; i++)
             {
                 sb.Append(i + " ");

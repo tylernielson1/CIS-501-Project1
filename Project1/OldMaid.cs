@@ -38,14 +38,22 @@ namespace Project1
             }
             deck.Shuffle();
             DealCards();
+            ct.DisplayLine("**** After the deal ****");
             ShowHands();
             DiscardDupes();
             ShuffleHands();
+            ct.DisplayLine("**** After discarding pairs and shuffling each hand ****");
             ShowHands();
+            ct.DisplayLine("");
+            ct.Wait();
+            bool stop;
+            int drawer = 0;
+            int drawee = 0;
             do
             {
+                stop = OneTurn(ref drawer, ref drawee);
+            } while (!stop);
 
-            } while ()
 
 
 
@@ -101,6 +109,31 @@ namespace Project1
             foreach(Player p in currentPlayers)
             {
                 p.Shuffle();
+            }
+        }
+
+        private bool OneTurn(ref int drawer, ref int drawee)
+        {
+            bool stop = false;
+            drawee = (drawer + 1) % currentPlayers.Count;
+            if(currentPlayers[drawer].IsUser)
+            {
+                ct.DisplayLine("******** Now User's Turn *********");
+                ct.DisplayLine(currentPlayers[drawer].ToString());
+                ct.DisplayLine(currentPlayers[drawee].ToString());
+                if(!currentPlayers[drawee].IsUser)
+                {//oh god why. this disgusts me.
+                    ComputerPlayer temp = (ComputerPlayer)currentPlayers[drawee];
+                    ct.DisplayLine(temp.MakeCardIndices());
+                }
+            }
+
+
+
+            drawer++;
+            if (drawer > currentPlayers.Count - 1)
+            {
+                drawer = 0;
             }
         }
     }

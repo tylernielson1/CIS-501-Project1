@@ -7,15 +7,6 @@ using System.Diagnostics;
 
 namespace Project1
 {
-    interface ITerminal
-    {
-        void Display(string s);
-        void DisplayLine(string s);
-        char GetChar(string prompt, string chars);
-        string GetString(string prompt, int length);
-        int GetInt(string prompt, int min, int max);
-    }
-
     class ConsoleTerminal : ITerminal
     {
         public void Display(string s)
@@ -26,6 +17,12 @@ namespace Project1
         public void DisplayLine(string s)
         {
             Console.WriteLine(s);
+        }
+
+        public void Wait()
+        {
+            Console.Write("<Return> to continue");
+            Console.Read();
         }
 
         public char GetChar(string prompt, string chars)

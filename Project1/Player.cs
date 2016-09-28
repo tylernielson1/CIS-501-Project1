@@ -153,6 +153,14 @@ namespace Project1
         public override string ToString()
         {//Creates a string representing the player's hand.
             StringBuilder sb = new StringBuilder();
+            if(this.IsUser)
+            {
+                sb.Append(name + " : ");
+            }
+            else
+            {
+                sb.Append(name + " : ");
+            }
             foreach(PlayingCard c in hand)
             {
                 if(c != null)

@@ -47,6 +47,7 @@
     <Compile Include="ComputerPlayer.cs" />
     <Compile Include="ConsoleTerminal.cs" />
     <Compile Include="HumanPlayer.cs" />
+    <Compile Include="ITerminal.cs" />
     <Compile Include="OldMaid.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayingCard.cs" />
